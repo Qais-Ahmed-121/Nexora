@@ -139,6 +139,9 @@ function App() {
       });
     } else {
       setSessions(updatedSessions);
+    }
+  };
+
   const formatSessionDate = (timestamp) => {
     const date = new Date(timestamp);
     if (isToday(date)) {
