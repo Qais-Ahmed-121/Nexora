@@ -2,37 +2,44 @@
 
 @theme {
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
-  --color-pm-bg: #0f172a; /* slate-900 */
-  --color-pm-card: #1e293b; /* slate-800 */
-  --color-pm-border: #334155; /* slate-700 */
-  --color-pm-accent: #6366f1; /* indigo-500 */
-  --color-pm-accent-hover: #4f46e5; /* indigo-600 */
+  
+  --animate-fadeIn: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 body {
-  width: 380px;
+  width: 360px;
   min-height: 500px;
   margin: 0;
   padding: 0;
-  background-color: var(--color-pm-bg);
-  color: #f8fafc; /* slate-50 */
+  background-color: #0F172A;
   overflow-x: hidden;
 }
 
 /* Custom Scrollbar for sleek look */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 5px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--color-pm-bg);
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-pm-border);
+  background: #334155;
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #475569; /* slate-600 */
+  background: #475569;
 }
