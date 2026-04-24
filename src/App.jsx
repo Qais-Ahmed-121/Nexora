@@ -1,17 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { format } from 'date-fns';
-import {
-  Save, Play, Trash2, Box, Command, Layers, Layout,
-  Activity, MessageSquare, AlertCircle, CheckCircle2
-} from 'lucide-react';
+import { format, isToday } from 'date-fns';
 
 const PM_TOOLS = [
-  { name: 'Jira', url: 'jira.com', icon: Layout },
-  { name: 'Confluence', url: 'atlassian.net/wiki', icon: Box },
-  { name: 'Figma', url: 'figma.com', icon: Layers },
-  { name: 'Analytics', url: 'analytics.google.com', icon: Activity },
-  { name: 'Slack', url: 'slack.com', icon: MessageSquare },
-  { name: 'Notion', url: 'notion.so', icon: Command }
+  { name: 'Jira', url: 'jira.com' },
+  { name: 'Confluence', url: 'atlassian.net/wiki' },
+  { name: 'Figma', url: 'figma.com' },
+  { name: 'Analytics', url: 'analytics.google.com' },
+  { name: 'Slack', url: 'slack.com' },
+  { name: 'Notion', url: 'notion.so' }
 ];
 
 function App() {
@@ -143,132 +139,99 @@ function App() {
       });
     } else {
       setSessions(updatedSessions);
+  const formatSessionDate = (timestamp) => {
+    const date = new Date(timestamp);
+    if (isToday(date)) {
+      return 'Today';
     }
+    return format(date, 'MMM d');
   };
 
   return (
-    <div className="flex flex-col h-screen p-4 box-border">
+    <div className="flex flex-col h-screen p-5 box-border bg-[#0F172A] text-slate-100 font-sans antialiased">
       {/* Header */}
-      <header className="flex items-center gap-3 pb-4 mb-5 border-b border-pm-border">
-        <div className="bg-pm-accent w-8 h-8 rounded-lg flex items-center justify-center text-white shrink-0 shadow-sm border border-indigo-400/20">
-          {/* Abstract N Logo */}
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="5" y="4" width="4" height="16" rx="1" fill="currentColor" opacity="0.6" />
-            <rect x="15" y="4" width="4" height="16" rx="1" fill="currentColor" />
-            <polygon points="6,4 10,4 18,20 14,20" fill="currentColor" opacity="0.9" />
+      <header className="flex items-center gap-3 pb-5 mb-5 border-b border-slate-800">
+        <div className="bg-[#1E293B] w-9 h-9 rounded-xl flex items-center justify-center text-slate-300 shrink-0">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6 5C6 4.44772 6.44772 4 7 4H8.5C9.05228 4 9.5 4.44772 9.5 5V19C9.5 19.5523 9.05228 20 8.5 20H7C6.44772 20 6 19.5523 6 19V5Z" fill="currentColor" opacity="0.8"/>
+            <path d="M14.5 5C14.5 4.44772 14.9477 4 15.5 4H17C17.5523 4 18 4.44772 18 5V19C18 19.5523 17.5523 20 17 20H15.5C14.9477 20 14.5 19.5523 14.5 19V5Z" fill="currentColor"/>
+            <path d="M7 5.5L16.5 18.5" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"/>
           </svg>
         </div>
-        <div className="flex flex-col justify-center">
-          <h1 className="text-lg font-semibold text-slate-100 tracking-tight leading-tight">
-            Ne<span className="text-indigo-400">x</span>ora
-          </h1>
-          <p className="text-[10px] text-slate-500 uppercase tracking-widest font-semibold leading-tight mt-0.5">PM Session Manager</p>
-        </div>
+        <h1 className="text-xl font-medium text-white tracking-wide">
+          Nexora
+        </h1>
       </header>
 
       {/* Notification Area */}
       {notification && (
-        <div className={`mb-4 p-3 rounded-lg flex items-center gap-2 text-sm transition-all animate-in fade-in slide-in-from-top-2 ${
-          notification.type === 'error' ? 'bg-red-500/10 text-red-400 border border-red-500/20' : 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
+        <div className={`mb-4 p-3 rounded-xl flex items-center gap-2 text-sm transition-all animate-in fade-in slide-in-from-top-2 ${
+          notification.type === 'error' ? 'bg-red-500/10 text-red-400 border border-red-500/20' : 'bg-[#1E293B] text-slate-200 border border-slate-700'
         }`}>
-          {notification.type === 'error' ? <AlertCircle size={16} /> : <CheckCircle2 size={16} />}
           {notification.message}
         </div>
       )}
 
       {/* Save Session Area */}
-      <section className="bg-slate-800/40 rounded-xl p-4 mb-5 border border-slate-700/50 shadow-sm">
-        <div className="flex items-center justify-between mb-3">
-          <h2 className="text-xs font-semibold text-slate-300">Current Session</h2>
-          <span className="text-[10px] font-medium text-slate-500">
-            {currentTabs.length} tabs open
-          </span>
-        </div>
-        
-        <div className="space-y-3">
-          <div>
-            <input
-              type="text"
-              placeholder={suggestedName ? `e.g. ${suggestedName}` : "Name your session..."}
-              value={sessionName}
-              onChange={(e) => setSessionName(e.target.value)}
-              className="w-full bg-slate-900 border border-slate-700/60 rounded-lg px-3 h-9 text-sm text-slate-100 placeholder:text-slate-500 focus:outline-none focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/50 transition-all shadow-inner"
-            />
-            {suggestedName && !sessionName && (
-              <p className="text-xs text-pm-accent mt-1.5 flex items-center gap-1 cursor-pointer hover:text-blue-400" onClick={() => setSessionName(suggestedName)}>
-                <Activity size={12} /> Suggested: {suggestedName}
-              </p>
-            )}
-          </div>
+      <section className="mb-6 space-y-3">
+        <input
+          type="text"
+          placeholder="Name your session..."
+          value={sessionName}
+          onChange={(e) => setSessionName(e.target.value)}
+          className="w-full bg-[#1E293B]/50 border border-indigo-500/30 rounded-lg px-4 h-[42px] text-sm text-slate-100 placeholder:text-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"
+        />
 
-          <button
-            onClick={handleSaveSession}
-            disabled={currentTabs.length === 0}
-            className="w-full flex items-center justify-center gap-2 bg-pm-accent hover:bg-pm-accent-hover disabled:opacity-50 disabled:cursor-not-allowed text-white text-sm font-medium h-9 rounded-lg transition-all active:scale-[0.98] shadow-sm border border-indigo-400/20"
-          >
-            <Save size={15} />
-            Save Current Session
-          </button>
-        </div>
+        <button
+          onClick={handleSaveSession}
+          disabled={currentTabs.length === 0}
+          className="w-full flex items-center justify-center bg-[#6366F1] hover:bg-[#4F46E5] disabled:opacity-50 disabled:cursor-not-allowed text-white text-[14px] font-medium h-[42px] rounded-lg transition-all active:scale-[0.98]"
+        >
+          Save Current Session
+        </button>
       </section>
 
       {/* Saved Sessions List */}
-      <section className="flex-1 overflow-y-auto pr-1">
-        <h2 className="text-xs font-semibold text-slate-400 mb-3 sticky top-0 bg-pm-bg py-1 z-10 tracking-wide uppercase">
-          Saved Sessions
-        </h2>
-        
+      <section className="flex-1 overflow-y-auto space-y-3 pr-1 pb-4">
         {sessions.length === 0 ? (
-          <div className="flex flex-col items-center justify-center h-32 text-slate-500 space-y-2">
-            <Box size={32} className="opacity-50" />
+          <div className="flex flex-col items-center justify-center h-32 text-slate-500">
             <p className="text-sm">No saved sessions yet</p>
           </div>
         ) : (
-          <div className="space-y-3">
-            {sessions.map(session => (
-              <div 
-                key={session.id} 
-                className="group bg-slate-800/30 rounded-lg p-3 border border-slate-700/50 hover:border-slate-600 hover:bg-slate-800/80 transition-all"
-              >
-                <div className="flex items-start justify-between mb-2">
-                  <div className="truncate pr-2">
-                    <h3 className="text-sm font-medium text-slate-200 truncate" title={session.name}>
-                      {session.name}
-                    </h3>
-                    <p className="text-[11px] text-slate-500 mt-0.5">
-                      {format(new Date(session.createdAt), 'MMM d, yyyy h:mm a')}
-                    </p>
-                  </div>
-                  <span className="shrink-0 text-[10px] font-medium text-slate-500">
-                    {session.tabs.length} tabs
-                  </span>
-                </div>
+          sessions.map(session => (
+            <div 
+              key={session.id} 
+              className="bg-[#1E293B] rounded-[14px] p-4 border border-slate-700/40 hover:border-slate-600 transition-colors"
+            >
+              <h3 className="text-[15px] font-semibold text-white mb-2 truncate" title={session.name}>
+                {session.name}
+              </h3>
+              
+              <div className="flex items-center justify-between">
+                <span className="text-[13px] text-slate-400">
+                  {session.tabs.length} tabs • {formatSessionDate(session.createdAt)}
+                </span>
                 
-                <div className="flex items-center gap-2 mt-3 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
+                <div className="flex items-center gap-4 text-[13px] font-medium text-slate-400">
                   <button
                     onClick={() => handleRestoreSession(session)}
-                    className="flex-1 flex items-center justify-center gap-1.5 bg-slate-700 hover:bg-slate-600 text-slate-200 text-xs font-medium py-1.5 px-3 rounded-md transition-colors"
+                    className="hover:text-white transition-colors"
                   >
-                    <Play size={14} /> Restore
+                    Restore
                   </button>
                   <button
                     onClick={() => handleDeleteSession(session.id)}
-                    className="flex items-center justify-center bg-slate-800 hover:bg-red-500/20 text-slate-400 hover:text-red-400 border border-slate-700 hover:border-red-500/30 p-1.5 rounded-md transition-colors"
-                    title="Delete Session"
+                    className="hover:text-white transition-colors"
                   >
-                    <Trash2 size={14} />
+                    Delete
                   </button>
                 </div>
               </div>
-            ))}
-          </div>
+            </div>
+          ))
         )}
       </section>
       
-      {/* Footer / Future Features Hook */}
-      <footer className="mt-4 pt-3 border-t border-pm-border text-center text-xs text-slate-500">
-        <p>Nexora Pro features coming soon ✨</p>
-      </footer>
     </div>
   );
 }
