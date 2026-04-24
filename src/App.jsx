@@ -149,20 +149,20 @@ function App() {
   return (
     <div className="flex flex-col h-screen p-4 box-border">
       {/* Header */}
-      <header className="flex items-center gap-3 pb-4 mb-4 border-b border-pm-border">
-        <div className="bg-pm-accent p-2 rounded-lg shadow-lg shadow-pm-accent/20 flex items-center justify-center">
+      <header className="flex items-center gap-3 pb-4 mb-5 border-b border-pm-border">
+        <div className="bg-pm-accent w-8 h-8 rounded-lg flex items-center justify-center text-white shrink-0 shadow-sm border border-indigo-400/20">
           {/* Abstract N Logo */}
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="3" y="3" width="5" height="18" rx="2" fill="currentColor" opacity="0.8" />
-            <rect x="16" y="3" width="5" height="18" rx="2" fill="currentColor" />
-            <rect x="8.5" y="6" width="5" height="18" rx="2" fill="currentColor" opacity="0.6" transform="rotate(-35 8.5 6)" />
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="5" y="4" width="4" height="16" rx="1" fill="currentColor" opacity="0.6" />
+            <rect x="15" y="4" width="4" height="16" rx="1" fill="currentColor" />
+            <polygon points="6,4 10,4 18,20 14,20" fill="currentColor" opacity="0.9" />
           </svg>
         </div>
-        <div>
-          <h1 className="text-xl font-semibold text-slate-50 tracking-wide">
+        <div className="flex flex-col justify-center">
+          <h1 className="text-lg font-semibold text-slate-100 tracking-tight leading-tight">
             Ne<span className="text-indigo-400">x</span>ora
           </h1>
-          <p className="text-xs text-slate-400 uppercase tracking-wider font-medium">PM Session Manager</p>
+          <p className="text-[10px] text-slate-500 uppercase tracking-widest font-semibold leading-tight mt-0.5">PM Session Manager</p>
         </div>
       </header>
 
@@ -177,10 +177,10 @@ function App() {
       )}
 
       {/* Save Session Area */}
-      <section className="bg-pm-card rounded-xl p-4 mb-4 border border-pm-border shadow-sm">
+      <section className="bg-slate-800/40 rounded-xl p-4 mb-5 border border-slate-700/50 shadow-sm">
         <div className="flex items-center justify-between mb-3">
-          <h2 className="text-sm font-semibold text-slate-200">Current Session</h2>
-          <span className="text-xs bg-slate-700 px-2 py-1 rounded-full text-slate-300">
+          <h2 className="text-xs font-semibold text-slate-300">Current Session</h2>
+          <span className="text-[10px] font-medium text-slate-500">
             {currentTabs.length} tabs open
           </span>
         </div>
@@ -192,7 +192,7 @@ function App() {
               placeholder={suggestedName ? `e.g. ${suggestedName}` : "Name your session..."}
               value={sessionName}
               onChange={(e) => setSessionName(e.target.value)}
-              className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-pm-accent focus:ring-1 focus:ring-pm-accent transition-all"
+              className="w-full bg-slate-900 border border-slate-700/60 rounded-lg px-3 h-9 text-sm text-slate-100 placeholder:text-slate-500 focus:outline-none focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/50 transition-all shadow-inner"
             />
             {suggestedName && !sessionName && (
               <p className="text-xs text-pm-accent mt-1.5 flex items-center gap-1 cursor-pointer hover:text-blue-400" onClick={() => setSessionName(suggestedName)}>
@@ -204,9 +204,9 @@ function App() {
           <button
             onClick={handleSaveSession}
             disabled={currentTabs.length === 0}
-            className="w-full flex items-center justify-center gap-2 bg-pm-accent hover:bg-pm-accent-hover disabled:opacity-50 disabled:cursor-not-allowed text-white text-sm font-medium py-2 px-4 rounded-lg transition-all active:scale-[0.98] shadow-lg shadow-pm-accent/20"
+            className="w-full flex items-center justify-center gap-2 bg-pm-accent hover:bg-pm-accent-hover disabled:opacity-50 disabled:cursor-not-allowed text-white text-sm font-medium h-9 rounded-lg transition-all active:scale-[0.98] shadow-sm border border-indigo-400/20"
           >
-            <Save size={16} />
+            <Save size={15} />
             Save Current Session
           </button>
         </div>
@@ -214,7 +214,7 @@ function App() {
 
       {/* Saved Sessions List */}
       <section className="flex-1 overflow-y-auto pr-1">
-        <h2 className="text-sm font-semibold text-slate-400 mb-3 sticky top-0 bg-pm-bg py-1 z-10">
+        <h2 className="text-xs font-semibold text-slate-400 mb-3 sticky top-0 bg-pm-bg py-1 z-10 tracking-wide uppercase">
           Saved Sessions
         </h2>
         
@@ -228,18 +228,18 @@ function App() {
             {sessions.map(session => (
               <div 
                 key={session.id} 
-                className="group bg-pm-card rounded-lg p-3 border border-pm-border hover:border-slate-600 transition-all hover:shadow-md"
+                className="group bg-slate-800/30 rounded-lg p-3 border border-slate-700/50 hover:border-slate-600 hover:bg-slate-800/80 transition-all"
               >
                 <div className="flex items-start justify-between mb-2">
                   <div className="truncate pr-2">
                     <h3 className="text-sm font-medium text-slate-200 truncate" title={session.name}>
                       {session.name}
                     </h3>
-                    <p className="text-xs text-slate-500 mt-0.5">
+                    <p className="text-[11px] text-slate-500 mt-0.5">
                       {format(new Date(session.createdAt), 'MMM d, yyyy h:mm a')}
                     </p>
                   </div>
-                  <span className="shrink-0 text-xs font-medium bg-slate-700/50 px-2 py-0.5 rounded text-slate-400">
+                  <span className="shrink-0 text-[10px] font-medium text-slate-500">
                     {session.tabs.length} tabs
                   </span>
                 </div>
