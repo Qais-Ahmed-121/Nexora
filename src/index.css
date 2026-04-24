@@ -5,8 +5,8 @@
   --color-pm-bg: #0f172a; /* slate-900 */
   --color-pm-card: #1e293b; /* slate-800 */
   --color-pm-border: #334155; /* slate-700 */
-  --color-pm-accent: #3b82f6; /* blue-500 */
-  --color-pm-accent-hover: #2563eb; /* blue-600 */
+  --color-pm-accent: #6366f1; /* indigo-500 */
+  --color-pm-accent-hover: #4f46e5; /* indigo-600 */
 }
 
 body {

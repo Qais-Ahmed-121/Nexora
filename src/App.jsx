@@ -150,14 +150,19 @@ function App() {
     <div className="flex flex-col h-screen p-4 box-border">
       {/* Header */}
       <header className="flex items-center gap-3 pb-4 mb-4 border-b border-pm-border">
-        <div className="bg-pm-accent p-2 rounded-lg shadow-lg shadow-pm-accent/20">
-          <Layers size={20} className="text-white" />
+        <div className="bg-pm-accent p-2 rounded-lg shadow-lg shadow-pm-accent/20 flex items-center justify-center">
+          {/* Abstract N Logo */}
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="3" y="3" width="5" height="18" rx="2" fill="currentColor" opacity="0.8" />
+            <rect x="16" y="3" width="5" height="18" rx="2" fill="currentColor" />
+            <rect x="8.5" y="6" width="5" height="18" rx="2" fill="currentColor" opacity="0.6" transform="rotate(-35 8.5 6)" />
+          </svg>
         </div>
         <div>
-          <h1 className="text-xl font-bold bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">
-            Nexora
+          <h1 className="text-xl font-semibold text-slate-50 tracking-wide">
+            Ne<span className="text-indigo-400">x</span>ora
           </h1>
-          <p className="text-xs text-slate-400">PM Session Manager</p>
+          <p className="text-xs text-slate-400 uppercase tracking-wider font-medium">PM Session Manager</p>
         </div>
       </header>
 
