@@ -155,10 +155,13 @@ function App() {
       {/* Header */}
       <header className="flex items-center gap-3 pb-5 mb-5 border-b border-slate-800">
         <div className="bg-[#1E293B] w-9 h-9 rounded-xl flex items-center justify-center text-slate-300 shrink-0">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M6 5C6 4.44772 6.44772 4 7 4H8.5C9.05228 4 9.5 4.44772 9.5 5V19C9.5 19.5523 9.05228 20 8.5 20H7C6.44772 20 6 19.5523 6 19V5Z" fill="currentColor" opacity="0.8"/>
-            <path d="M14.5 5C14.5 4.44772 14.9477 4 15.5 4H17C17.5523 4 18 4.44772 18 5V19C18 19.5523 17.5523 20 17 20H15.5C14.9477 20 14.5 19.5523 14.5 19V5Z" fill="currentColor"/>
-            <path d="M7 5.5L16.5 18.5" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"/>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            {/* Left Pillar */}
+            <rect x="4" y="4" width="6" height="16" rx="3" fill="#E2E8F0" />
+            {/* Right Pillar */}
+            <rect x="14" y="4" width="6" height="16" rx="3" fill="#818CF8" />
+            {/* Diagonal Pill */}
+            <rect x="9" y="1" width="6" height="22" rx="3" transform="rotate(40 12 12)" fill="#1E293B" stroke="#E2E8F0" strokeWidth="2.5" />
           </svg>
         </div>
         <h1 className="text-xl font-medium text-white tracking-wide">
