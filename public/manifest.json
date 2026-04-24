@@ -1,0 +1,17 @@
+{
+  "manifest_version": 3,
+  "name": "Nexora",
+  "version": "1.0.0",
+  "description": "Save and restore browser tab sessions for Product Managers.",
+  "action": {
+    "default_popup": "index.html",
+    "default_title": "Open Nexora"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": [
+    "tabs",
+    "storage"
+  ]
+}
